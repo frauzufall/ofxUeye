@@ -1,5 +1,4 @@
 #pragma once
-
 #include "ofxMachineVision/Device/Blocking.h"
 
 namespace ofxMachineVision {
@@ -41,7 +40,7 @@ namespace ofxMachineVision {
 			void getFrame(shared_ptr<ofxMachineVision::Frame>) override;
 
 		protected:
-			DWORD cameraHandle;
+                        unsigned int cameraHandle;
 			ofPixels pixels;
 			int imageMemoryID;
 			int maxClock;

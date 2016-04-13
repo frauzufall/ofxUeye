@@ -1,4 +1,9 @@
 #include "ofxUeye.h"
+
+#ifdef TARGET_LINUX
+//typedef uint32_t HIDS;
+#endif
+
 #include "../libs/ueye/include/uEye.h"
 
 using namespace ofxMachineVision;
