@@ -16,7 +16,7 @@ namespace ofxMachineVision {
 
 					this->deviceID = 1;
 				}
-				
+
 				ofParameter<bool> useCameraIDAsDeviceID;
 
 				ofParameter<bool> useImageFormat;
@@ -24,24 +24,24 @@ namespace ofxMachineVision {
 			};
 
 			UEye();
-			string getTypeName() const override;
-			shared_ptr<Base::InitialisationSettings> getDefaultSettings() override {
+			virtual string getTypeName() const override;
+			virtual shared_ptr<Base::InitialisationSettings> getDefaultSettings() override {
 				return make_shared<InitialisationSettings>();
 			}
 			Specification open(shared_ptr<Base::InitialisationSettings> = nullptr) override;
-			void close() override;
-			bool startCapture() override;
-			void stopCapture() override;
-			void setExposure(ofxMachineVision::Microseconds) override;
-			void setGain(float) override;
-			void setBinning(int binningX = 1, int binningY = 1) override;
-			void setROI(const ofRectangle &) override;
+			virtual void close() override;
+			virtual bool startCapture() override;
+			virtual void stopCapture() override;
+			virtual void setExposure(ofxMachineVision::Microseconds) override;
+			virtual void setGain(float) override;
+			virtual void setBinning(int binningX = 1, int binningY = 1) override;
+			virtual void setROI(const ofRectangle &) override;
 			/*void setTriggerMode(const ofxMachineVision::TriggerMode &, const ofxMachineVision::TriggerSignalType &) override;
-			void setGPOMode(const ofxMachineVision::GPOMode &) override;*/
-			void getFrame(shared_ptr<ofxMachineVision::Frame>) override;
+			virtual void setGPOMode(const ofxMachineVision::GPOMode &) override;*/
+			virtual void getFrame(shared_ptr<ofxMachineVision::Frame>) override;
 
 		protected:
-			DWORD cameraHandle;
+			unsigned int cameraHandle;
 			ofPixels pixels;
 			int imageMemoryID;
 			int maxClock;
