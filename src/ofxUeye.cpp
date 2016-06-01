@@ -57,7 +57,17 @@ namespace ofxMachineVision {
 			if (result != IS_SUCCESS) {
 				OFXMV_ERROR << "Couldn't initialise camera";
 				return Specification();
-			}
+                        }
+
+						std::wstring filename( L"/home/random/Development/openframeworks/apps/frauzufall/bookCV/bin/data/cam/UI324xCP-NIR_conf.ini" );
+                        const wchar_t* _filename = filename.c_str();
+                        result = is_ParameterSet(this->cameraHandle, IS_PARAMETERSET_CMD_LOAD_FILE, (void*) _filename, NULL);
+                        if (result == IS_SUCCESS) {
+                                // realloc image mem with actual sizes and depth.
+                                is_FreeImageMem( this->cameraHandle, (char *) this->pixels.getPixels(), this->imageMemoryID);
+                        }else {
+                            std::cout << "ERROR could not load .ini file" << std::endl;
+                        }
 
 			//get camera properties
 			BOARDINFO cameraInfo;
@@ -132,21 +142,22 @@ namespace ofxMachineVision {
 
 			//setup some camera parameters
 			is_SetColorMode(this->cameraHandle, IS_CM_SENSOR_RAW8);
-			result = is_SetOptimalCameraTiming(this->cameraHandle, IS_BEST_PCLK_RUN_ONCE, 4000, &this->maxClock, &this->fps);;
+                        result = is_SetOptimalCameraTiming(this->cameraHandle, IS_BEST_PCLK_RUN_ONCE, 4000, &this->maxClock, &this->fps);;
 
-			specification.addFeature(Feature::Feature_Binning);
-			specification.addFeature(Feature::Feature_DeviceID);
-			specification.addFeature(Feature::Feature_Exposure);
-			specification.addFeature(Feature::Feature_FreeRun);
-			specification.addFeature(Feature::Feature_Gain);
-			//HACK FOR LIGHT BARRIER PRAGUE
-			//specification.addFeature(Feature::Feature_OneShot);
-			specification.addFeature(Feature::Feature_PixelClock);
-			specification.addFeature(Feature::Feature_ROI);
-			//specification.addFeature(Feature::Feature_Triggering);
-			//specification.addFeature(Feature::Feature_GPO);
 
-			return specification;
+                        specification.addFeature(Feature::Feature_Binning);
+                        specification.addFeature(Feature::Feature_DeviceID);
+                        specification.addFeature(Feature::Feature_Exposure);
+                        specification.addFeature(Feature::Feature_FreeRun);
+                        specification.addFeature(Feature::Feature_Gain);
+                        //HACK FOR LIGHT BARRIER PRAGUE
+                        //specification.addFeature(Feature::Feature_OneShot);
+                        specification.addFeature(Feature::Feature_PixelClock);
+                        specification.addFeature(Feature::Feature_ROI);
+                        //specification.addFeature(Feature::Feature_Triggering);
+                        //specification.addFeature(Feature::Feature_GPO);
+
+                        return specification;
 		}
 
 		//----------
